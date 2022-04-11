@@ -1,4 +1,9 @@
 import './../scss/main.scss';
-import ck from './ck';
+import UI from './classes/UI';
 
-ck(456);
+const ulEl = document.querySelector('ul');
+
+const ulCL = new UI();
+
+////////////////
+// ulEl.addEventListener('click', listener);
