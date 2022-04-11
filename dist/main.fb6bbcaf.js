@@ -210,7 +210,7 @@ var Add = /*#__PURE__*/function () {
 
   _createClass(Add, [{
     key: "add",
-    value: function add() {
+    value: function add(max) {
       console.log('ADD');
     }
   }]);
@@ -343,7 +343,16 @@ var Sum = /*#__PURE__*/_createClass(function Sum() {
 });
 
 exports.default = Sum;
-},{"./Add":"js/classes/Add.js","./Sub":"js/classes/Sub.js","./Mul":"js/classes/Mul.js","./Div":"js/classes/Div.js"}],"js/classes/UI.js":[function(require,module,exports) {
+},{"./Add":"js/classes/Add.js","./Sub":"js/classes/Sub.js","./Mul":"js/classes/Mul.js","./Div":"js/classes/Div.js"}],"js/classes/config.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.maxNum = void 0;
+var maxNum = 100;
+exports.maxNum = maxNum;
+},{}],"js/classes/UI.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -353,15 +362,17 @@ exports.default = void 0;
 
 var _Sum2 = _interopRequireDefault(require("./Sum"));
 
+var _config = require("./config");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -382,29 +393,47 @@ var UI = /*#__PURE__*/function (_Sum) {
 
   var _super = _createSuper(UI);
 
-  function UI() {
+  function UI(ulEl) {
     var _this;
 
     _classCallCheck(this, UI);
 
     _this = _super.call(this);
+    _this.ulEl = ulEl;
 
-    _this.addCL.add();
-
-    _this.subCL.sub();
-
-    _this.mulCL.mul();
-
-    _this.divCL.div();
+    _this.addCL.add(_config.maxNum);
 
     return _this;
   }
 
-  return _createClass(UI);
+  _createClass(UI, [{
+    key: "callMath",
+    value: function callMath(e) {
+      var target = e.target;
+      var status = target.dataset.status;
+      this.changeLiClass(target);
+      if (status === 'add') this.addCL.add(_config.maxNum);
+      if (status === 'sub') this.subCL.sub(_config.maxNum);
+      if (status === 'mul') this.mulCL.mul(_config.maxNum);
+      if (status === 'div') this.divCL.div(_config.maxNum);
+    }
+  }, {
+    key: "changeLiClass",
+    value: function changeLiClass(target) {
+      //remove current class
+      this.ulEl.querySelectorAll('li').forEach(function (li) {
+        return li.classList.remove('current');
+      }); //add current class
+
+      target.classList.add('current');
+    }
+  }]);
+
+  return UI;
 }(_Sum2.default);
 
 exports.default = UI;
-},{"./Sum":"js/classes/Sum.js"}],"js/main.js":[function(require,module,exports) {
+},{"./Sum":"js/classes/Sum.js","./config":"js/classes/config.js"}],"js/main.js":[function(require,module,exports) {
 "use strict";
 
 require("./../scss/main.scss");
@@ -414,8 +443,11 @@ var _UI = _interopRequireDefault(require("./classes/UI"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ulEl = document.querySelector('ul');
-var ulCL = new _UI.default(); ////////////////
-// ulEl.addEventListener('click', listener);
+var ulCL = new _UI.default(ulEl); ////////////////
+
+ulEl.addEventListener('click', function (e) {
+  return ulCL.callMath(e);
+});
 },{"./../scss/main.scss":"scss/main.scss","./classes/UI":"js/classes/UI.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

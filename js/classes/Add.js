@@ -1,5 +1,5 @@
 export default class Add {
-  add() {
+  add(max) {
     console.log('ADD');
   }
 }

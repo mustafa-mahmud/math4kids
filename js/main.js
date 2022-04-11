@@ -3,7 +3,7 @@ import UI from './classes/UI';
 
 const ulEl = document.querySelector('ul');
 
-const ulCL = new UI();
+const ulCL = new UI(ulEl);
 
 ////////////////
-// ulEl.addEventListener('click', listener);
+ulEl.addEventListener('click', (e) => ulCL.callMath(e));
