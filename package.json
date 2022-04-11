@@ -1,0 +1,16 @@
+{
+	"name": "math4kids",
+	"version": "1.0.0",
+	"description": "math for all kids",
+	"main": "main.js",
+	"scripts": {
+		"dev": "parcel index.html",
+		"build": "parcel build index.html"
+	},
+	"author": "mithu",
+	"license": "ISC",
+	"devDependencies": {
+		"parcel-bundler": "^1.12.5",
+		"sass": "^1.50.0"
+	}
+}
