@@ -11,14 +11,6 @@ export default class UI extends Sum {
     this.addEl = addEl;
   }
 
-  callMath(e) {
-    const target = e?.target ? e.target : this.addEl;
-    const status = target.dataset.status;
-
-    this.changeLiClass(target);
-    this.ckMathMethod(status);
-  }
-
   changeLiClass(target) {
     //remove current class
     this.ulEl
@@ -27,16 +19,8 @@ export default class UI extends Sum {
 
     //add current class
     target.classList.add('current');
-  }
 
-  ckMathMethod(status) {
-    if (status === 'add') {
-      const sum = this.addCL.add();
-      this.displayUI(sum, '+');
-    }
-    if (status === 'sub') this.subCL.sub();
-    if (status === 'mul') this.mulCL.mul();
-    if (status === 'div') this.divCL.div();
+    return this;
   }
 
   displayUI(sum, status) {}

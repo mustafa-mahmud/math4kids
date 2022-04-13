@@ -10,5 +10,9 @@ const addEl = document.getElementById('add');
 const uiCL = new UI(ulEl, num1El, num2El, typeEl, addEl);
 
 ////////////////
-uiCL.callMath();
-ulEl.addEventListener('click', (e) => uiCL.callMath(e));
+ulEl.addEventListener('click', (e) => {
+  const target = e.target;
+  const status = target.closest('li').textContent.toLowerCase();
+
+  uiCL.changeLiClass(target).doMath(status);
+});

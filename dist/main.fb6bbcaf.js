@@ -196,7 +196,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.maxMin = void 0;
-var maxMin = [100, 5];
+var maxMin = [10, 5];
 exports.maxMin = maxMin;
 },{}],"js/classes/Helper.js":[function(require,module,exports) {
 "use strict";
@@ -207,57 +207,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _config = require("./config");
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var Helper = /*#__PURE__*/function () {
-  function Helper() {
-    _classCallCheck(this, Helper);
-  }
-
-  _createClass(Helper, [{
-    key: "between",
-    value: function between() {
-      return Math.floor(Math.random() * (Helper.tempArr[0] - Helper.tempArr[1] + 1)) + Helper.tempArr[1];
-    }
-  }, {
-    key: "randomTwoNums",
-    value: function randomTwoNums() {
-      if (Helper.arr.length < 2) {
-        var num = this.between();
-        if (!Helper.arr.includes(num)) Helper.arr.push(num);
-        this.randomTwoNums();
-      }
-
-      return Helper.arr;
-    }
-  }]);
-
-  return Helper;
-}();
-
-exports.default = Helper;
-
-_defineProperty(Helper, "arr", []);
-
-_defineProperty(Helper, "tempArr", _config.maxMin);
-},{"./config":"js/classes/config.js"}],"js/classes/Add.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _Helper2 = _interopRequireDefault(require("./Helper"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
@@ -281,36 +230,40 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-var Add = /*#__PURE__*/function (_Helper) {
-  _inherits(Add, _Helper);
+var Helper = /*#__PURE__*/function (_Data) {
+  _inherits(Helper, _Data);
 
-  var _super = _createSuper(Add);
+  var _super = _createSuper(Helper);
 
-  function Add() {
-    _classCallCheck(this, Add);
+  function Helper() {
+    _classCallCheck(this, Helper);
 
     return _super.apply(this, arguments);
   }
 
-  _createClass(Add, [{
-    key: "add",
-    value: function add() {
-      var sum = this.randomTwoNums();
-      var result = sum[0] + sum[1];
-      _Helper2.default.arr = [];
-      _Helper2.default.tempArr = [result + 10, result - 10];
-      var nearAnswer = this.randomTwoNums();
-      console.log(sum);
-      console.log(result);
-      console.log(nearAnswer); // return sum;
+  _createClass(Helper, [{
+    key: "between",
+    value: function between() {
+      return Math.floor(Math.random() * (tempArr.maxMin[0] - tempArr.maxMin[1] + 1)) + tempArr.maxMin[1];
+    }
+  }, {
+    key: "randomTwoNums",
+    value: function randomTwoNums() {
+      if (arr.length < tempArr.totalNums) {
+        var num = this.between();
+        if (!arr.includes(num)) arr.push(num);
+        this.randomTwoNums();
+      }
     }
   }]);
 
-  return Add;
-}(_Helper2.default);
+  return Helper;
+}(Data);
 
-exports.default = Add;
-},{"./Helper":"js/classes/Helper.js"}],"js/classes/Sub.js":[function(require,module,exports) {
+var _default = new Helper();
+
+exports.default = _default;
+},{"./config":"js/classes/config.js"}],"js/classes/Sum.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -318,123 +271,44 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _config = require("./config");
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-var Sub = /*#__PURE__*/function () {
-  function Sub() {
-    _classCallCheck(this, Sub);
-  }
-
-  _createClass(Sub, [{
-    key: "sub",
-    value: function sub() {
-      console.log('SUB');
-    }
-  }]);
-
-  return Sub;
-}();
-
-exports.default = Sub;
-},{}],"js/classes/Mul.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-var Mul = /*#__PURE__*/function () {
-  function Mul() {
-    _classCallCheck(this, Mul);
-  }
-
-  _createClass(Mul, [{
-    key: "mul",
-    value: function mul() {
-      console.log('MUL');
-    }
-  }]);
-
-  return Mul;
-}();
-
-exports.default = Mul;
-},{}],"js/classes/Div.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-var Div = /*#__PURE__*/function () {
-  function Div() {
-    _classCallCheck(this, Div);
-  }
-
-  _createClass(Div, [{
-    key: "div",
-    value: function div() {
-      console.log('DIV');
-    }
-  }]);
-
-  return Div;
-}();
-
-exports.default = Div;
-},{}],"js/classes/Sum.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _Add = _interopRequireDefault(require("./Add"));
-
-var _Sub = _interopRequireDefault(require("./Sub"));
-
-var _Mul = _interopRequireDefault(require("./Mul"));
-
-var _Div = _interopRequireDefault(require("./Div"));
+var _Helper = _interopRequireDefault(require("./Helper"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var Sum = /*#__PURE__*/function () {
+  function Sum() {
+    _classCallCheck(this, Sum);
+  }
 
-var Sum = /*#__PURE__*/_createClass(function Sum() {
-  _classCallCheck(this, Sum);
+  _createClass(Sum, [{
+    key: "doMath",
+    value: function doMath(status) {
+      _Helper.default.randomTwoNums();
 
-  this.addCL = new _Add.default();
-  this.subCL = new _Sub.default();
-  this.mulCL = new _Mul.default();
-  this.divCL = new _Div.default();
-});
+      console.log(_Helper.default.arr);
+      _config.arr = ([], function () {
+        throw new Error('"' + "arr" + '" is read-only.');
+      }());
+      /* if (status === 'add') console.log('123');
+      if (status === 'subtract') console.log('456');
+      if (status === 'multiply') console.log('789');
+      if (status === 'divide') console.log('147'); */
+    }
+  }]);
+
+  return Sum;
+}();
 
 exports.default = Sum;
-},{"./Add":"js/classes/Add.js","./Sub":"js/classes/Sub.js","./Mul":"js/classes/Mul.js","./Div":"js/classes/Div.js"}],"js/classes/UI.js":[function(require,module,exports) {
+},{"./config":"js/classes/config.js","./Helper":"js/classes/Helper.js"}],"js/classes/UI.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -488,14 +362,6 @@ var UI = /*#__PURE__*/function (_Sum) {
   }
 
   _createClass(UI, [{
-    key: "callMath",
-    value: function callMath(e) {
-      var target = e !== null && e !== void 0 && e.target ? e.target : this.addEl;
-      var status = target.dataset.status;
-      this.changeLiClass(target);
-      this.ckMathMethod(status);
-    }
-  }, {
     key: "changeLiClass",
     value: function changeLiClass(target) {
       //remove current class
@@ -504,18 +370,7 @@ var UI = /*#__PURE__*/function (_Sum) {
       }); //add current class
 
       target.classList.add('current');
-    }
-  }, {
-    key: "ckMathMethod",
-    value: function ckMathMethod(status) {
-      if (status === 'add') {
-        var sum = this.addCL.add();
-        this.displayUI(sum, '+');
-      }
-
-      if (status === 'sub') this.subCL.sub();
-      if (status === 'mul') this.mulCL.mul();
-      if (status === 'div') this.divCL.div();
+      return this;
     }
   }, {
     key: "displayUI",
@@ -542,9 +397,10 @@ var typeEl = document.getElementById('type');
 var addEl = document.getElementById('add');
 var uiCL = new _UI.default(ulEl, num1El, num2El, typeEl, addEl); ////////////////
 
-uiCL.callMath();
 ulEl.addEventListener('click', function (e) {
-  return uiCL.callMath(e);
+  var target = e.target;
+  var status = target.closest('li').textContent.toLowerCase();
+  uiCL.changeLiClass(target).doMath(status);
 });
 },{"./../scss/main.scss":"scss/main.scss","./classes/UI":"js/classes/UI.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -574,7 +430,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "9328" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "2651" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

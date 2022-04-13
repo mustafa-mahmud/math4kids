@@ -1,13 +1,12 @@
-import Add from './Add';
-import Sub from './Sub';
-import Mul from './Mul';
-import Div from './Div';
+import Data from './Data';
 
 export default class Sum {
-  constructor() {
-    this.addCL = new Add();
-    this.subCL = new Sub();
-    this.mulCL = new Mul();
-    this.divCL = new Div();
+  doMath(status) {
+    Data.randomTwoNums();
+    console.log(Data.arr);
+    /* if (status === 'add') console.log('123');
+    if (status === 'subtract') console.log('456');
+    if (status === 'multiply') console.log('789');
+    if (status === 'divide') console.log('147'); */
   }
 }
