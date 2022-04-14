@@ -1,1 +1,1 @@
-export const maxMin = [10, 5];
+export const maxMin = [100, 5];

@@ -1,12 +1,18 @@
 import Data from './Data';
 
 export default class Sum {
-  doMath(status) {
-    Data.randomTwoNums();
-    console.log(Data.arr);
-    /* if (status === 'add') console.log('123');
-    if (status === 'subtract') console.log('456');
-    if (status === 'multiply') console.log('789');
-    if (status === 'divide') console.log('147'); */
+  getMath(status, level, init) {
+    Data.arr = [];
+    Data.tempArr = {
+      // ...Data.tempArr,
+      maxMin: [90, 10],
+      totalNums: +level,
+      notBeInclude: 50,
+      status: status,
+    };
+
+    console.log(Data.tempArr);
+    Data.arr = Data.randomTwoNums();
+    return Data.arr[0] - Data.arr[1];
   }
 }

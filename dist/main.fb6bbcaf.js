@@ -196,9 +196,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.maxMin = void 0;
-var maxMin = [10, 5];
+var maxMin = [100, 5];
 exports.maxMin = maxMin;
-},{}],"js/classes/Helper.js":[function(require,module,exports) {
+},{}],"js/classes/Data.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -208,59 +208,53 @@ exports.default = void 0;
 
 var _config = require("./config");
 
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+var Data = /*#__PURE__*/function () {
+  function Data() {
+    _classCallCheck(this, Data);
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-var Helper = /*#__PURE__*/function (_Data) {
-  _inherits(Helper, _Data);
-
-  var _super = _createSuper(Helper);
-
-  function Helper() {
-    _classCallCheck(this, Helper);
-
-    return _super.apply(this, arguments);
+    this.arr = [];
+    this.tempArr = {
+      maxMin: _config.maxMin,
+      totalNums: 2,
+      notBeInclude: 0,
+      status: 'add'
+    };
   }
 
-  _createClass(Helper, [{
+  _createClass(Data, [{
     key: "between",
     value: function between() {
-      return Math.floor(Math.random() * (tempArr.maxMin[0] - tempArr.maxMin[1] + 1)) + tempArr.maxMin[1];
+      return Math.floor(Math.random() * (this.tempArr.maxMin[0] - this.tempArr.maxMin[1] + 1)) + this.tempArr.maxMin[1];
     }
   }, {
     key: "randomTwoNums",
     value: function randomTwoNums() {
-      if (arr.length < tempArr.totalNums) {
-        var num = this.between();
-        if (!arr.includes(num)) arr.push(num);
+      if (this.arr.length < this.tempArr.totalNums) {
+        var num = Math.abs(this.between());
+
+        if (!this.arr.includes(num) && num !== this.tempArr.notBeInclude) {
+          this.arr.push(num);
+        }
+
         this.randomTwoNums();
       }
+
+      return this.arr.sort(function (a, b) {
+        return b - a;
+      });
     }
   }]);
 
-  return Helper;
-}(Data);
+  return Data;
+}();
 
-var _default = new Helper();
+var _default = new Data();
 
 exports.default = _default;
 },{"./config":"js/classes/config.js"}],"js/classes/Sum.js":[function(require,module,exports) {
@@ -271,9 +265,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _config = require("./config");
-
-var _Helper = _interopRequireDefault(require("./Helper"));
+var _Data = _interopRequireDefault(require("./Data"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -289,18 +281,19 @@ var Sum = /*#__PURE__*/function () {
   }
 
   _createClass(Sum, [{
-    key: "doMath",
-    value: function doMath(status) {
-      _Helper.default.randomTwoNums();
-
-      console.log(_Helper.default.arr);
-      _config.arr = ([], function () {
-        throw new Error('"' + "arr" + '" is read-only.');
-      }());
-      /* if (status === 'add') console.log('123');
-      if (status === 'subtract') console.log('456');
-      if (status === 'multiply') console.log('789');
-      if (status === 'divide') console.log('147'); */
+    key: "getMath",
+    value: function getMath(status, level, init) {
+      _Data.default.arr = [];
+      _Data.default.tempArr = {
+        // ...Data.tempArr,
+        maxMin: [90, 10],
+        totalNums: +level,
+        notBeInclude: 50,
+        status: status
+      };
+      console.log(_Data.default.tempArr);
+      _Data.default.arr = _Data.default.randomTwoNums();
+      return _Data.default.arr[0] - _Data.default.arr[1];
     }
   }]);
 
@@ -308,7 +301,7 @@ var Sum = /*#__PURE__*/function () {
 }();
 
 exports.default = Sum;
-},{"./config":"js/classes/config.js","./Helper":"js/classes/Helper.js"}],"js/classes/UI.js":[function(require,module,exports) {
+},{"./Data":"js/classes/Data.js"}],"js/classes/UI.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -395,12 +388,17 @@ var num1El = document.getElementById('num1');
 var num2El = document.getElementById('num2');
 var typeEl = document.getElementById('type');
 var addEl = document.getElementById('add');
+var selectEl = document.getElementById('level');
 var uiCL = new _UI.default(ulEl, num1El, num2El, typeEl, addEl); ////////////////
 
 ulEl.addEventListener('click', function (e) {
+  var level = selectEl.value;
   var target = e.target;
   var status = target.closest('li').textContent.toLowerCase();
-  uiCL.changeLiClass(target).doMath(status);
+  uiCL.changeLiClass(target).getMath(status, level, 5);
+});
+selectEl.addEventListener('change', function (e) {
+  var value = e.target.value; // console.log(value);
 });
 },{"./../scss/main.scss":"scss/main.scss","./classes/UI":"js/classes/UI.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -430,7 +428,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "2651" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "9904" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

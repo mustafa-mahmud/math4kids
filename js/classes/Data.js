@@ -1,3 +1,5 @@
+import { maxMin } from './config';
+
 class Data {
   constructor() {
     this.arr = [];
@@ -19,10 +21,15 @@ class Data {
 
   randomTwoNums() {
     if (this.arr.length < this.tempArr.totalNums) {
-      const num = this.between();
-      if (!this.arr.includes(num)) this.arr.push(num);
+      const num = Math.abs(this.between());
+      if (!this.arr.includes(num) && num !== this.tempArr.notBeInclude) {
+        this.arr.push(num);
+      }
+
       this.randomTwoNums();
     }
+
+    return this.arr.sort((a, b) => b - a);
   }
 }
 
