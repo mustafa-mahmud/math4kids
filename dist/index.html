@@ -32,10 +32,10 @@
 				</div>
 				<nav>
 					<ul>
-						<li id="add" class="current">Add</li>
-						<li>Subtract</li>
-						<li>Multiply</li>
-						<li>Divide</li>
+						<li id="add" class="current" data-status="+">Add</li>
+						<li data-status="-">Subtract</li>
+						<li data-status="*">Multiply</li>
+						<li data-status="/">Divide</li>
 					</ul>
 				</nav>
 			</div>
@@ -46,11 +46,15 @@
 				<div class="result">
 					<span class="wrong">
 						<strong>Wrong :</strong>
-						<strong>0</strong>
+						<strong id="wrong">0</strong>
+					</span>
+					<span class="clicked">
+						<strong>Total Clicked :</strong>
+						<strong id="clicked">0</strong>
 					</span>
 					<span class="correct">
 						<strong>Correct :</strong>
-						<strong>0</strong>
+						<strong id="correct">0</strong>
 					</span>
 				</div>
 				<div class="question">
@@ -61,16 +65,16 @@
 					<h1 id="answer" style="color: gray">?</h1>
 				</div>
 			</div>
-			<div class="answer-options">
+			<div id="answer-options" class="answer-options">
+				<!-- <div class="options" style="background-color: #FE4A49;">
+					<h1 data-answer="5" id="option1">0</h1>
+				</div>
 				<div class="options" style="background-color: #FE4A49;">
-					<h1 id="option1">0</h1>
+					<h1 data-answer="10" id="option2">0</h1>
 				</div>
-				<div class="options" style="background-color: #2AB7CA;">
-					<h1 id="option2">0</h1>
-				</div>
-				<div class="options" style="background-color: #FED766;">
-					<h1 id="option3">0</h1>
-				</div>
+				<div class="options" style="background-color: #FE4A49;">
+					<h1 data-answer="7" id="option3">0</h1>
+				</div> -->
 			</div>
 		</div>
 

@@ -196,7 +196,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.maxMin = void 0;
-var maxMin = [100, 5];
+var maxMin = [50, 4];
 exports.maxMin = maxMin;
 },{}],"js/classes/Data.js":[function(require,module,exports) {
 "use strict";
@@ -208,56 +208,36 @@ exports.default = void 0;
 
 var _config = require("./config");
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
-var Data = /*#__PURE__*/function () {
-  function Data() {
-    _classCallCheck(this, Data);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    this.arr = [];
-    this.tempArr = {
-      maxMin: _config.maxMin,
-      totalNums: 2,
-      notBeInclude: 0,
-      status: 'add'
-    };
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Data = /*#__PURE__*/_createClass(function Data() {
+  _classCallCheck(this, Data);
+});
+
+_defineProperty(Data, "allData", {
+  maxMin: _config.maxMin,
+  status: '+',
+  totalNums: 2,
+  question: [],
+  answer: null,
+  possibleAns: [],
+  randomIndex: [],
+  result: {
+    totalClicked: 0,
+    wrong: 0,
+    correct: 0
   }
+});
 
-  _createClass(Data, [{
-    key: "between",
-    value: function between() {
-      return Math.floor(Math.random() * (this.tempArr.maxMin[0] - this.tempArr.maxMin[1] + 1)) + this.tempArr.maxMin[1];
-    }
-  }, {
-    key: "randomTwoNums",
-    value: function randomTwoNums() {
-      if (this.arr.length < this.tempArr.totalNums) {
-        var num = Math.abs(this.between());
-
-        if (!this.arr.includes(num) && num !== this.tempArr.notBeInclude) {
-          this.arr.push(num);
-        }
-
-        this.randomTwoNums();
-      }
-
-      return this.arr.sort(function (a, b) {
-        return b - a;
-      });
-    }
-  }]);
-
-  return Data;
-}();
-
-var _default = new Data();
-
+var _default = Data;
 exports.default = _default;
-},{"./config":"js/classes/config.js"}],"js/classes/Sum.js":[function(require,module,exports) {
+},{"./config":"js/classes/config.js"}],"js/classes/Helper.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -266,6 +246,119 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _Data = _interopRequireDefault(require("./Data"));
+
+var _config = require("./config");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+var Helper = /*#__PURE__*/function () {
+  function Helper() {
+    _classCallCheck(this, Helper);
+  }
+
+  _createClass(Helper, [{
+    key: "between",
+    value: function between() {
+      return Math.floor(Math.random() * (_Data.default.allData.maxMin[0] - _Data.default.allData.maxMin[1] + 1)) + _Data.default.allData.maxMin[1];
+    }
+  }, {
+    key: "randomNums",
+    value: function randomNums() {
+      var propertyName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'question';
+      var looping = propertyName === 'question' ? 2 : _Data.default.allData.totalNums;
+
+      if (_Data.default.allData[propertyName].length < looping) {
+        var num = Math.abs(this.between());
+
+        if (!_Data.default.allData[propertyName].includes(num) && _Data.default.allData.answer !== num) {
+          _Data.default.allData[propertyName].push(num);
+        }
+
+        this.randomNums(propertyName);
+      } else {
+        _Data.default.allData[propertyName] = _Data.default.allData[propertyName].sort(function (a, b) {
+          return b - a;
+        });
+      }
+    }
+  }, {
+    key: "answerWillBeNotFloat",
+    value: function answerWillBeNotFloat() {
+      this.randomNums();
+      var answer = _Data.default.allData.question[0] / _Data.default.allData.question[1];
+
+      if (!Number.isInteger(answer)) {
+        _Data.default.allData.question = [];
+        this.answerWillBeNotFloat();
+      } else {
+        _Data.default.allData.answer = answer;
+      }
+    }
+  }, {
+    key: "initData",
+    value: function initData() {
+      var level = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 2;
+      var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '+';
+      var newMaxMin = null;
+
+      if (_Data.default.allData.answer) {
+        newMaxMin = [_Data.default.allData.answer + 5, _Data.default.allData.answer - 5];
+      }
+
+      _Data.default.allData = _objectSpread(_objectSpread({}, _Data.default.allData), {}, {
+        maxMin: newMaxMin ? newMaxMin : _config.maxMin,
+        status: status,
+        totalNums: level
+      });
+    }
+  }, {
+    key: "getRandomIndex",
+    value: function getRandomIndex() {
+      var looping = _Data.default.allData.possibleAns.length;
+
+      if (_Data.default.allData.randomIndex.length < looping) {
+        var index = Math.floor(Math.random() * looping);
+
+        if (!_Data.default.allData.randomIndex.includes(index)) {
+          _Data.default.allData.randomIndex.push(index);
+        }
+
+        this.getRandomIndex();
+      }
+    }
+  }]);
+
+  return Helper;
+}();
+
+var _default = new Helper();
+
+exports.default = _default;
+},{"./Data":"js/classes/Data.js","./config":"js/classes/config.js"}],"js/classes/Sum.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Data = _interopRequireDefault(require("./Data"));
+
+var _Helper = _interopRequireDefault(require("./Helper"));
+
+var _config = require("./config");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -282,18 +375,47 @@ var Sum = /*#__PURE__*/function () {
 
   _createClass(Sum, [{
     key: "getMath",
-    value: function getMath(status, level, init) {
-      _Data.default.arr = [];
-      _Data.default.tempArr = {
-        // ...Data.tempArr,
-        maxMin: [90, 10],
-        totalNums: +level,
-        notBeInclude: 50,
-        status: status
-      };
-      console.log(_Data.default.tempArr);
-      _Data.default.arr = _Data.default.randomTwoNums();
-      return _Data.default.arr[0] - _Data.default.arr[1];
+    value: function getMath(level, status) {
+      _Data.default.allData.question = [];
+      _Data.default.allData.answer = null;
+
+      _Helper.default.initData(level, status); //question need = [50,45] (add)
+
+
+      _Helper.default.randomNums('question'); //answer need = 95
+
+
+      this.getAnswer(status);
+      if (!_Data.default.allData.answer) ;
+
+      _Helper.default.initData(level, status);
+
+      _Data.default.allData.possibleAns = []; //possible answer need = [90,95,94] (basic)
+
+      _Helper.default.randomNums('possibleAns');
+
+      _Data.default.allData.possibleAns.push(_Data.default.allData.answer);
+
+      _Data.default.allData.randomIndex = [];
+
+      _Helper.default.getRandomIndex();
+    }
+  }, {
+    key: "getAnswer",
+    value: function getAnswer(status) {
+      if (status === '+') _Data.default.allData.answer = _Data.default.allData.question[0] + _Data.default.allData.question[1];
+      if (status === '-') _Data.default.allData.answer = _Data.default.allData.question[0] - _Data.default.allData.question[1];
+      if (status === '*') _Data.default.allData.answer = _Data.default.allData.question[0] * _Data.default.allData.question[1];
+
+      if (status === '/') {
+        var answer = _Data.default.allData.question[0] / _Data.default.allData.question[1];
+
+        if (!Number.isInteger(answer)) {
+          _Helper.default.answerWillBeNotFloat();
+        } else {
+          _Data.default.allData.answer = answer;
+        }
+      }
     }
   }]);
 
@@ -301,13 +423,15 @@ var Sum = /*#__PURE__*/function () {
 }();
 
 exports.default = Sum;
-},{"./Data":"js/classes/Data.js"}],"js/classes/UI.js":[function(require,module,exports) {
+},{"./Data":"js/classes/Data.js","./Helper":"js/classes/Helper.js","./config":"js/classes/config.js"}],"js/classes/UI.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+var _Data = _interopRequireDefault(require("./Data"));
 
 var _Sum2 = _interopRequireDefault(require("./Sum"));
 
@@ -340,7 +464,7 @@ var UI = /*#__PURE__*/function (_Sum) {
 
   var _super = _createSuper(UI);
 
-  function UI(ulEl, num1El, num2El, typeEl, addEl) {
+  function UI(ulEl, num1El, num2El, typeEl, addEl, answerOptionEl, wrongEl, clickedEl, correctEl, selectEl) {
     var _this;
 
     _classCallCheck(this, UI);
@@ -351,6 +475,11 @@ var UI = /*#__PURE__*/function (_Sum) {
     _this.num2El = num2El;
     _this.typeEl = typeEl;
     _this.addEl = addEl;
+    _this.answerOptionEl = answerOptionEl;
+    _this.wrongEl = wrongEl;
+    _this.clickedEl = clickedEl;
+    _this.correctEl = correctEl;
+    _this.selectEl = selectEl;
     return _this;
   }
 
@@ -363,18 +492,84 @@ var UI = /*#__PURE__*/function (_Sum) {
       }); //add current class
 
       target.classList.add('current');
-      return this;
     }
   }, {
     key: "displayUI",
-    value: function displayUI(sum, status) {}
+    value: function displayUI() {
+      var _this2 = this;
+
+      this.num1El.textContent = _Data.default.allData.question[0];
+      this.num2El.textContent = _Data.default.allData.question[1];
+      this.typeEl.textContent = _Data.default.allData.status;
+      this.correctEl.textContent = _Data.default.allData.result.correct;
+      this.wrongEl.textContent = _Data.default.allData.result.wrong;
+      this.clickedEl.textContent = _Data.default.allData.result.correct + _Data.default.allData.result.wrong;
+      this.answerOptionEl.innerHTML = "";
+
+      _Data.default.allData.randomIndex.forEach(function (index) {
+        _this2.createAnswerOptions(_Data.default.allData.possibleAns[index]);
+      });
+    }
+  }, {
+    key: "createAnswerOptions",
+    value: function createAnswerOptions(ans) {
+      var div = document.createElement('div');
+      div.classList.add('options');
+      div.style.backgroundColor = '#666';
+      div.innerHTML = "<h1 data-answer=\"".concat(ans, "\">").concat(ans, "</h1>");
+      this.answerOptionEl.appendChild(div);
+    }
+  }, {
+    key: "checkResult",
+    value: function checkResult(target, ans) {
+      var _this3 = this;
+
+      var resultBool = _Data.default.allData.answer === ans;
+
+      if (resultBool) {
+        target.style.backgroundColor = 'green';
+        _Data.default.allData.result.correct++;
+        setTimeout(function () {
+          _this3.initMath();
+        }, 1000);
+      }
+
+      if (!resultBool) {
+        target.style.backgroundColor = 'red';
+        _Data.default.allData.result.wrong++;
+        setTimeout(function () {
+          _this3.initMath();
+        }, 1000);
+      }
+
+      this.answerOptionEl.querySelectorAll('.options').forEach(function (option) {
+        return option.style.pointerEvents = 'none';
+      });
+    }
+  }, {
+    key: "getStatus",
+    value: function getStatus() {
+      var status = null;
+      this.ulEl.querySelectorAll('li').forEach(function (li) {
+        if (li.classList.contains('current')) status = li.getAttribute('data-status');
+      });
+      return status;
+    }
+  }, {
+    key: "initMath",
+    value: function initMath() {
+      var level = this.selectEl.value;
+      var status = this.getStatus();
+      this.getMath(level, status);
+      this.displayUI();
+    }
   }]);
 
   return UI;
 }(_Sum2.default);
 
 exports.default = UI;
-},{"./Sum":"js/classes/Sum.js"}],"js/main.js":[function(require,module,exports) {
+},{"./Data":"js/classes/Data.js","./Sum":"js/classes/Sum.js"}],"js/main.js":[function(require,module,exports) {
 "use strict";
 
 require("./../scss/main.scss");
@@ -389,17 +584,24 @@ var num2El = document.getElementById('num2');
 var typeEl = document.getElementById('type');
 var addEl = document.getElementById('add');
 var selectEl = document.getElementById('level');
-var uiCL = new _UI.default(ulEl, num1El, num2El, typeEl, addEl); ////////////////
+var answerOptionEl = document.getElementById('answer-options');
+var wrongEl = document.getElementById('wrong');
+var clickedEl = document.getElementById('clicked');
+var correctEl = document.getElementById('correct');
+var uiCL = new _UI.default(ulEl, num1El, num2El, typeEl, addEl, answerOptionEl, wrongEl, clickedEl, correctEl, selectEl); ////////////////
 
 ulEl.addEventListener('click', function (e) {
-  var level = selectEl.value;
   var target = e.target;
-  var status = target.closest('li').textContent.toLowerCase();
-  uiCL.changeLiClass(target).getMath(status, level, 5);
+  uiCL.changeLiClass(target);
+  uiCL.initMath();
 });
-selectEl.addEventListener('change', function (e) {
-  var value = e.target.value; // console.log(value);
+answerOptionEl.addEventListener('click', function (e) {
+  var target = e.target.closest('.options');
+  if (!target) return;
+  var ans = +target.querySelector('h1').getAttribute('data-answer');
+  uiCL.checkResult(target, ans);
 });
+uiCL.initMath();
 },{"./../scss/main.scss":"scss/main.scss","./classes/UI":"js/classes/UI.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -428,7 +630,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "9904" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "12068" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

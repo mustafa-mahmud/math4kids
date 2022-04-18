@@ -90,7 +90,6 @@ nav a {
   border-radius: 3px;
   margin-top: 10px;
   color: #fff;
-  transition: 2s;
   box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.9);
 }
 
@@ -109,10 +108,11 @@ select {
 .result {
   display: flex;
   justify-content: space-between;
-  background-color: green;
-  font-size: 25px;
+  background-color: whitesmoke;
+  font-size: 20px;
   padding: 20px;
-  color: #fff;
+  color: #000;
+  letter-spacing: 1.2px;
 }
 
 .question {
