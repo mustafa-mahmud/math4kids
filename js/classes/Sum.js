@@ -12,8 +12,6 @@ export default class Sum {
     //answer need = 95
     this.getAnswer(status);
 
-    if (!Data.allData.answer);
-
     Helper.initData(level, status);
     Data.allData.possibleAns = [];
     //possible answer need = [90,95,94] (basic)
@@ -32,8 +30,11 @@ export default class Sum {
       Data.allData.answer = Data.allData.question[0] * Data.allData.question[1];
     if (status === '/') {
       const answer = Data.allData.question[0] / Data.allData.question[1];
+
       if (!Number.isInteger(answer)) {
-        Helper.answerWillBeNotFloat();
+        Data.allData.question = [];
+        Helper.randomNums();
+        this.getAnswer('/');
       } else {
         Data.allData.answer = answer;
       }

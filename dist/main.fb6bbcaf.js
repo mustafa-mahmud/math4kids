@@ -294,19 +294,6 @@ var Helper = /*#__PURE__*/function () {
       }
     }
   }, {
-    key: "answerWillBeNotFloat",
-    value: function answerWillBeNotFloat() {
-      this.randomNums();
-      var answer = _Data.default.allData.question[0] / _Data.default.allData.question[1];
-
-      if (!Number.isInteger(answer)) {
-        _Data.default.allData.question = [];
-        this.answerWillBeNotFloat();
-      } else {
-        _Data.default.allData.answer = answer;
-      }
-    }
-  }, {
     key: "initData",
     value: function initData() {
       var level = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 2;
@@ -318,7 +305,7 @@ var Helper = /*#__PURE__*/function () {
       }
 
       _Data.default.allData = _objectSpread(_objectSpread({}, _Data.default.allData), {}, {
-        maxMin: newMaxMin ? newMaxMin : _config.maxMin,
+        maxMin: newMaxMin ? newMaxMin : [_config.maxMin[0] * level, _config.maxMin[1] * level],
         status: status,
         totalNums: level
       });
@@ -386,7 +373,6 @@ var Sum = /*#__PURE__*/function () {
 
 
       this.getAnswer(status);
-      if (!_Data.default.allData.answer) ;
 
       _Helper.default.initData(level, status);
 
@@ -411,7 +397,11 @@ var Sum = /*#__PURE__*/function () {
         var answer = _Data.default.allData.question[0] / _Data.default.allData.question[1];
 
         if (!Number.isInteger(answer)) {
-          _Helper.default.answerWillBeNotFloat();
+          _Data.default.allData.question = [];
+
+          _Helper.default.randomNums();
+
+          this.getAnswer('/');
         } else {
           _Data.default.allData.answer = answer;
         }
@@ -630,7 +620,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "12068" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "11580" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

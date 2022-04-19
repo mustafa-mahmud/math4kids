@@ -31,26 +31,16 @@ class Helper {
     }
   }
 
-  answerWillBeNotFloat() {
-    this.randomNums();
-    const answer = Data.allData.question[0] / Data.allData.question[1];
-    if (!Number.isInteger(answer)) {
-      Data.allData.question = [];
-      this.answerWillBeNotFloat();
-    } else {
-      Data.allData.answer = answer;
-    }
-  }
-
   initData(level = 2, status = '+') {
     let newMaxMin = null;
+
     if (Data.allData.answer) {
       newMaxMin = [Data.allData.answer + 5, Data.allData.answer - 5];
     }
 
     Data.allData = {
       ...Data.allData,
-      maxMin: newMaxMin ? newMaxMin : maxMin,
+      maxMin: newMaxMin ? newMaxMin : [maxMin[0] * level, maxMin[1] * level],
       status,
       totalNums: level,
     };
